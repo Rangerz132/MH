@@ -11,13 +11,13 @@ public class PlayerState : MonoBehaviour
     public GameObject weapon;
     public Transform weaponHolderHand;
     public Transform weaponHolderBag;
+    public bool isAttacking = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
-
         stateValue = playerState.Unarmed;
 
     }
@@ -26,11 +26,14 @@ public class PlayerState : MonoBehaviour
     void Update()
     {
         DetectState();
+        AttackState();
     }
 
 
     private void DetectState() {
 
+
+        //Switch between states
         if (Input.GetButtonDown("SwitchArmState") || Input.GetKeyDown(KeyCode.Q)) {
 
             animator.SetTrigger("SwitchArmState");
@@ -39,7 +42,7 @@ public class PlayerState : MonoBehaviour
 
                 case playerState.Unarmed:
 
-                    Debug.Log("Unarmed");
+                    //Now armed
 
                     stateValue = playerState.Armed;
                     animator.SetInteger("ArmStateID", 1);
@@ -47,8 +50,8 @@ public class PlayerState : MonoBehaviour
 
                 case playerState.Armed:
 
-                    Debug.Log("armed");
-
+                   //Now disarmed
+                   
                     stateValue = playerState.Unarmed;
                     animator.SetInteger("ArmStateID", 0);
                     break;
@@ -66,10 +69,21 @@ public class PlayerState : MonoBehaviour
         weapon.transform.SetParent(weaponHolderBag);
     }
 
-    public void testtest(Transform testObject) {
+    public void AttackState() {
 
-        weapon.transform.SetParent(testObject);
+        if (stateValue == playerState.Armed) {
+
+
+            if (Input.GetKeyDown(KeyCode.E) ) {
+
+                animator.SetTrigger("AttackE");
+               
+            
+            }
+        }
+    
     }
+
 
 
 }

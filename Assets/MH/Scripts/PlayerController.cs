@@ -5,9 +5,12 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Player Movements")]
-    [SerializeField] private float movementSpeed = 3f;
+    public float unarmedMovementSpeed = 5f;
+    public float armedMovementSpeed = 3f;
     private CharacterController characterController;
     private Animator animator;
+    private PlayerState playerStateScript;
+   
     
     
 
@@ -16,6 +19,7 @@ public class PlayerController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
+        playerStateScript = GetComponent<PlayerState>();
     }
 
     // Update is called once per frame
@@ -31,7 +35,18 @@ public class PlayerController : MonoBehaviour
 
         Vector3 move = transform.right * moveX + transform.forward * moveZ; //direction and facing
 
-        characterController.Move(move * movementSpeed * Time.deltaTime);
+
+        if (playerStateScript.stateValue == PlayerState.playerState.Armed)
+        {
+
+            characterController.Move(move * unarmedMovementSpeed * Time.deltaTime);
+        }
+        else if (playerStateScript.stateValue == PlayerState.playerState.Unarmed) {
+
+            characterController.Move(move * armedMovementSpeed * Time.deltaTime);
+        }
+
+       
 
     }
 
