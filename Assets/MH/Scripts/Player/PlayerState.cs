@@ -14,6 +14,8 @@ public class PlayerState : MonoBehaviour
     public bool isAttacking = false;
 
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,9 @@ public class PlayerState : MonoBehaviour
     {
         DetectState();
         AttackState();
+
+
+        isAttacking = animator.GetBool("isAttacking");
     }
 
 
@@ -74,14 +79,33 @@ public class PlayerState : MonoBehaviour
         if (stateValue == playerState.Armed) {
 
 
-            if (Input.GetKeyDown(KeyCode.E) ) {
+            if (Input.GetKeyDown(KeyCode.E) && isAttacking == false) {
 
+                isAttacking = true;
                 animator.SetTrigger("AttackE");
+                
                
             
             }
         }
     
+    }
+
+
+    public void WeaponAttackEnable(int enableCol)
+    {
+        Rigidbody weaponRb = weaponHolderHand.GetChild(0).GetComponent<Rigidbody>();
+
+        if (enableCol != 0)
+        {
+            weaponRb.detectCollisions = true;
+          
+        }       
+    }
+
+    public void ResetAttackState() {
+
+        isAttacking = false;
     }
 
 
