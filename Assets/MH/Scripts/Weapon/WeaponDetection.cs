@@ -21,7 +21,7 @@ public class WeaponDetection : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "Enemy") {
-            CameraShake.Instance.ShakeCamera(3f, 1f);
+           // CameraShake.Instance.ShakeCamera(3f, 1f);
             Debug.Log("ouch");
         }
     }
