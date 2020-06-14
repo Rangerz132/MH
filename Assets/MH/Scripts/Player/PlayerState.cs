@@ -99,9 +99,14 @@ public class PlayerState : MonoBehaviour
         if (enableCol != 0)
         {
             weaponRb.detectCollisions = true;
-          
-        }       
+
+        }
+        else {
+            weaponRb.detectCollisions = false;
+        }
     }
+
+
 
     public void ResetAttackState() {
 
