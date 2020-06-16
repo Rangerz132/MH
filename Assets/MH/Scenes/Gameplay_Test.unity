@@ -1418,7 +1418,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804742888}
-  m_LocalRotation: {x: 0.07437623, y: 0.0000000042896824, z: -3.1993594e-10, w: 0.9972303}
+  m_LocalRotation: {x: 0.074376225, y: -0.00000000428968, z: 3.1993697e-10, w: 0.9972303}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1553,8 +1553,8 @@ MonoBehaviour:
   m_ImpulseDefinition:
     m_ImpulseChannel: -1
     m_RawSignal: {fileID: 11400000, guid: 90a11b0bd26895e4ab6d8538b8d1e699, type: 2}
-    m_AmplitudeGain: 0.5
-    m_FrequencyGain: 100
+    m_AmplitudeGain: 0.3
+    m_FrequencyGain: 30
     m_RepeatMode: 0
     m_Randomize: 1
     m_TimeEnvelope:
@@ -1572,7 +1572,7 @@ MonoBehaviour:
         m_RotationOrder: 4
       m_AttackTime: 0
       m_SustainTime: 0.2
-      m_DecayTime: 0.1
+      m_DecayTime: 0.3
       m_ScaleWithImpact: 1
       m_HoldForever: 0
     m_ImpactRadius: 100
