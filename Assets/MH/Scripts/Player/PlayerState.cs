@@ -13,6 +13,9 @@ public class PlayerState : MonoBehaviour
     public Transform weaponHolderBag;
     public bool isAttacking = false;
 
+    public Transform targetVFX;
+    public GameObject SwordVFX;
+
 
 
 
@@ -104,6 +107,12 @@ public class PlayerState : MonoBehaviour
         else {
             weaponRb.detectCollisions = false;
         }
+    }
+
+    public void EnableSwordVFX() { 
+           
+        Instantiate(SwordVFX, targetVFX.position, targetVFX.rotation);
+
     }
 
 
