@@ -7,9 +7,12 @@ public class PlayerController : MonoBehaviour
     [Header("Player Movements")]
     public float unarmedMovementSpeed = 5f;
     public float armedMovementSpeed = 3f;
+    public float turnAngleTime = 0.1f;
+    public float turnSmoothVelocity;
     private CharacterController characterController;
     private Animator animator;
     private PlayerState playerStateScript;
+    public Transform cam;
    
     
     
@@ -26,27 +29,43 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        //Player movement;
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
+ 
+      
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        animator.SetFloat("InputX", moveX);
-        animator.SetFloat("InputY", moveZ);
-
-        Vector3 move = transform.right * moveX + transform.forward * moveZ; //direction and facing
+        if (direction.magnitude >= .05f) {
 
 
-        if (playerStateScript.stateValue == PlayerState.playerState.Armed)
-        {
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnAngleTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            characterController.Move(move * unarmedMovementSpeed * Time.deltaTime);
+
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+
+            characterController.Move(moveDir.normalized * unarmedMovementSpeed * Time.deltaTime);
+
+
+
+            if (playerStateScript.stateValue == PlayerState.playerState.Armed)
+            {
+
+                characterController.Move(moveDir.normalized * unarmedMovementSpeed * Time.deltaTime);
+            }
+            else if (playerStateScript.stateValue == PlayerState.playerState.Unarmed)
+            {
+
+                characterController.Move(moveDir.normalized * armedMovementSpeed * Time.deltaTime);
+            }
+
+
         }
-        else if (playerStateScript.stateValue == PlayerState.playerState.Unarmed) {
 
-            characterController.Move(move * armedMovementSpeed * Time.deltaTime);
-        }
+        animator.SetFloat("InputX", horizontal);
+        animator.SetFloat("InputY", vertical);
 
-       
 
     }
 
